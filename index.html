@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Registration</title>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>Employee Registration</h1>
+        <p>Complete the form to register a new employee.</p>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">Employees</a>
+        <a href="#">Register</a>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+
+        <!-- Employee Registration Form -->
+        <section>
+            <h2>Register New Employee</h2>
+
+            <form>
+
+                <fieldset>
+                    <legend>Personal Information</legend>
+
+                    <label for="fullname">Full Name:</label>
+                    <input type="text" id="fullname" name="fullname"
+                           placeholder="Enter full name" required>
+
+                    <br><br>
+
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email"
+                           placeholder="Enter email address" required>
+
+                    <br><br>
+
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password"
+                           minlength="8" required>
+
+                    <br><br>
+
+                    <label for="age">Age:</label>
+                    <input type="number" id="age" name="age"
+                           min="18" max="100" required>
+
+                    <br><br>
+
+                    <label for="date">Date of Birth:</label>
+                    <input type="date" id="date" name="date">
+
+                    <br><br>
+
+                    <label for="profile">Profile Image:</label>
+                    <input type="file" id="profile" name="profile">
+
+                    <br><br>
+
+                    <label for="bio">Bio:</label>
+                    <br>
+                    <textarea id="bio" name="bio"
+                              placeholder="Tell us about yourself"
+                              rows="5" cols="40"></textarea>
+
+                </fieldset>
+
+                <br>
+
+                <!-- Department -->
+                <fieldset>
+                    <legend>Work Information</legend>
+
+                    <label for="department">Department:</label>
+
+                    <select id="department" name="department" required>
+                        <option value="">Select department</option>
+                        <option value="it">Information Technology</option>
+                        <option value="hr">Human Resources</option>
+                        <option value="finance">Finance</option>
+                        <option value="marketing">Marketing</option>
+                    </select>
+
+                    <br><br>
+
+                    <!-- Gender -->
+                    <p>Gender:</p>
+
+                    <input type="radio" id="male" name="gender" value="male">
+                    <label for="male">Male</label>
+
+                    <input type="radio" id="female" name="gender" value="female">
+                    <label for="female">Female</label>
+
+                    <br><br>
+
+                    <!-- Skills -->
+                    <p>Skills:</p>
+
+                    <input type="checkbox" id="html" name="skills" value="html">
+                    <label for="html">HTML</label>
+
+                    <input type="checkbox" id="css" name="skills" value="css">
+                    <label for="css">CSS</label>
+
+                    <input type="checkbox" id="javascript" name="skills" value="javascript">
+                    <label for="javascript">JavaScript</label>
+
+                </fieldset>
+
+                <br>
+
+                <!-- Buttons -->
+                <button type="submit">Register Employee</button>
+                <button type="reset">Cancel</button>
+
+            </form>
+        </section>
+
+
+        <!-- Registered Employees -->
+        <section>
+            <h2>Registered Employees</h2>
+
+            <table border="1">
+
+                <thead>
+                    <tr>
+                        <th>Employee ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Department</th>
+                        <th>Position</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>EMP001</td>
+                        <td>John Mensah</td>
+                        <td>john@yahoo.com</td>
+                        <td>IT</td>
+                        <td>Software Developer</td>
+                    </tr>
+
+                    <tr>
+                        <td>EMP002</td>
+                        <td>Mary Asante</td>
+                        <td>mary@yahoo.com</td>
+                        <td>HR</td>
+                        <td>HR Officer</td>
+                    </tr>
+
+                    <tr>
+                        <td>EMP003</td>
+                        <td>David Owusu</td>
+                        <td>david@yahoo.com</td>
+                        <td>Finance</td>
+                        <td>Accountant</td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Employee Registration System</p>
+    </footer>
+
+</body>
+</html>
