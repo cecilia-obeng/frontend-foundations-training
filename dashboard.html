@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard</title>
+
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+    <!-- Dashboard Header -->
+    <header class="dashboard-header">
+
+        <div class="logo">
+            Employee Management
+        </div>
+
+        <div class="user-area">
+            <span>Admin</span>
+            <button type="button">Logout</button>
+        </div>
+
+    </header>
+
+
+    <!-- Dashboard Layout -->
+    <div class="dashboard-layout">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+
+            <h2>Dashboard</h2>
+
+            <nav class="sidebar-nav">
+                <a href="#" class="active">Overview</a>
+                <a href="#">Employees</a>
+                <a href="#">Departments</a>
+                <a href="#">Reports</a>
+                <a href="#">Settings</a>
+            </nav>
+
+        </aside>
+
+
+        <!-- Main Content -->
+        <main class="dashboard-main">
+
+            <section class="page-heading">
+                <div>
+                    <h1>Dashboard</h1>
+                    <p>Welcome back, Admin.</p>
+                </div>
+
+                <button type="button" class="primary-button">
+                    Add Employee
+                </button>
+            </section>
+
+
+            <!-- Statistic Cards -->
+            <section class="stats-grid">
+
+                <article class="stat-card">
+                    <h3>Total Employees</h3>
+                    <p class="stat-number">120</p>
+                </article>
+
+                <article class="stat-card">
+                    <h3>Active Employees</h3>
+                    <p class="stat-number">108</p>
+                </article>
+
+                <article class="stat-card">
+                    <h3>Departments</h3>
+                    <p class="stat-number">8</p>
+                </article>
+
+                <article class="stat-card">
+                    <h3>New Employees</h3>
+                    <p class="stat-number">12</p>
+                </article>
+
+            </section>
+
+
+            <!-- Recent Users -->
+            <section class="dashboard-section">
+
+                <div class="section-heading">
+                    <h2>Recent Employees</h2>
+
+                    <button type="button" class="secondary-button">
+                        View All
+                    </button>
+                </div>
+
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Department</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <tr>
+                                <td>Sarah Mensah</td>
+                                <td>sarah@yahoo.com</td>
+                                <td>IT</td>
+                                <td>
+                                    <span class="badge active-badge">
+                                        Active
+                                    </span>
+                                </td>
+                                <td>
+                                    <button type="button" class="small-button">
+                                        View
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>Daniel Owusu</td>
+                                <td>daniel@yahoo.com</td>
+                                <td>Finance</td>
+                                <td>
+                                    <span class="badge active-badge">
+                                        Active
+                                    </span>
+                                </td>
+                                <td>
+                                    <button type="button" class="small-button">
+                                        View
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>Mary Asante</td>
+                                <td>mary@yahoo.com</td>
+                                <td>HR</td>
+                                <td>
+                                    <span class="badge inactive-badge">
+                                        Inactive
+                                    </span>
+                                </td>
+                                <td>
+                                    <button type="button" class="small-button">
+                                        View
+                                    </button>
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+            <!-- Quick Actions -->
+            <section class="dashboard-section">
+
+                <h2>Quick Actions</h2>
+
+                <div class="action-buttons">
+
+                    <button type="button" class="primary-button">
+                        Add Employee
+                    </button>
+
+                    <button type="button" class="secondary-button">
+                        Generate Report
+                    </button>
+
+                    <button type="button" class="secondary-button">
+                        Manage Departments
+                    </button>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+</body>
+
+</html>
