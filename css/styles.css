@@ -1,6 +1,25 @@
-/* ========================================
-   GLOBAL STYLES
-======================================== */
+
+:root {
+    --primary-color: #2563eb;
+    --primary-dark: #1d4ed8;
+
+    --background-color: #f4f6f8;
+    --white: #ffffff;
+
+    --text-color: #222222;
+    --muted-text: #666666;
+
+    --border-color: #e5e7eb;
+
+    --sidebar-color: #1f2937;
+
+    --spacing-small: 8px;
+    --spacing-medium: 15px;
+    --spacing-large: 30px;
+
+    --border-radius: 8px;
+}
+
 
 * {
     box-sizing: border-box;
@@ -9,8 +28,8 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #f4f6f8;
-    color: #222;
+    background-color: var(--background-color);
+    color: var(--text-color);
 }
 
 
@@ -20,7 +39,7 @@ body {
 
 .dashboard-header {
     height: 70px;
-    background-color: #ffffff;
+    background-color: var(--white);
 
     display: flex;
     justify-content: space-between;
@@ -28,7 +47,7 @@ body {
 
     padding: 0 30px;
 
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .logo {
@@ -61,7 +80,7 @@ body {
 ======================================== */
 
 .sidebar {
-    background-color: #1f2937;
+    background-color: var(--sidebar);
     color: white;
 
     padding: 25px 20px;
@@ -80,12 +99,16 @@ body {
 }
 
 .sidebar-nav a {
-    color: white;
+    display: block;
+    color: #ffffff;
     text-decoration: none;
 
     padding: 12px 15px;
+    font-size: 15px
+    font-weight: 500;
 
     border-radius: 6px;
+    background-color: transparent
 }
 
 .sidebar-nav a:hover {
@@ -190,9 +213,9 @@ body {
 }
 
 
-/* ========================================
+/* 
    STATISTIC CARDS
-======================================== */
+ */
 
 .stats-grid {
     display: grid;
@@ -231,9 +254,9 @@ body {
 }
 
 
-/* ========================================
+/* 
    DASHBOARD SECTIONS
-======================================== */
+ */
 
 .dashboard-section {
     background-color: white;
@@ -260,9 +283,9 @@ body {
 }
 
 
-/* ========================================
+/* 
    TABLE
-======================================== */
+*/
 
 .table-container {
     width: 100%;
@@ -296,9 +319,9 @@ td {
 }
 
 
-/* ========================================
+/* 
    STATUS BADGES
-======================================== */
+*/
 
 .badge {
     display: inline-block;
