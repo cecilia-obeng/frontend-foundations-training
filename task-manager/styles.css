@@ -1,0 +1,81 @@
+:root {
+    --primary-color: #2563eb;
+    --background-color: #f4f6f8;
+    --white: #ffffff;
+    --text-color: #222222;
+    --border-radius: 8px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+header {
+    background-color: var(--white);
+    padding: 30px;
+    text-align: center;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+header h1 {
+    margin: 0 0 10px;
+}
+
+header p {
+    margin: 0;
+    color: #666666;
+}
+
+main {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.card {
+    background-color: var(--white);
+    padding: 30px;
+    border-radius: var(--border-radius);
+    border: 1px solid #e5e7eb;
+}
+
+button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 11px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #1d4ed8;
+}
+
+#employeeResults {
+    margin-top: 25px;
+}
+
+.employee {
+    padding: 15px;
+    margin-bottom: 10px;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+}
+
+@media (max-width: 600px) {
+    main {
+        margin: 20px auto;
+    }
+
+    .card {
+        padding: 20px;
+    }
+}
