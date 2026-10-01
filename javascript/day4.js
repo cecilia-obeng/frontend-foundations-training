@@ -1,4 +1,5 @@
-console.log("Hello,Javascript!");
+
+console.log("Hello,Javascript!");     
 const name = "Cecilia";
 let age = 20;
 
@@ -114,18 +115,27 @@ const employeeData = {
 };
 console.log(employeeData);
 //Calculate performance
-let performanceResult;
 
-if (employeeData.score >= 80 && employeeData.attendance >= 90) {
-    performanceResult = "Excellent";
-} else if (employeeData.score >= 70 && employeeData.attendance >= 75) {
-    performanceResult = "Good";
-} else if (employeeData.score >= 50 && employeeData.attendance >= 60) {
-    performanceResult = "Needs Improvement";
-} else {
-    performanceResult = "Poor";
-}
+    const performanceResult = getPerformance(
+    employeeData.score,
+    employeeData.attendance
+);
+    
+
+
+
 console.log(`Employee: ${employeeData.name}`);
 console.log(`Score: ${employeeData.score}`);
 console.log(`Attendance: ${employeeData.attendance}%`);
 console.log(`Performance: ${performanceResult}`);
+function getPerformance(score, attendance) {
+    if (score >= 80 && attendance >= 90) {
+        return "Excellent";
+    } else if (score >= 70 && attendance >= 75) {
+        return "Good";
+    } else if (score >= 50 && attendance >= 60) {
+        return "Needs Improvement";
+    } else {
+        return "Poor";
+    }
+}
