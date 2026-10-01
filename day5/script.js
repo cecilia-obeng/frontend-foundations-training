@@ -5,14 +5,24 @@ const employees = [];
 function renderEmployees() {
     employeeList.innerHTML = "";
 
-    employees.forEach(function (employee) {
+    employees.forEach(function (employee, index) {
         const listItem = document.createElement("li");
 
-        listItem.textContent = `${employee.name} - ${employee.performance}`;
+        listItem.textContent = `${employee.name} - ${employee.performance} `;
 
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "Delete";
+
+        deleteButton.addEventListener("click", function () {
+            employees.splice(index, 1);
+            renderEmployees();
+        });
+
+        listItem.appendChild(deleteButton);
         employeeList.appendChild(listItem);
     });
 }
+
 
 changeButton.addEventListener("click", function () {
     if (message.textContent === "Welcome to the employee system.") {
