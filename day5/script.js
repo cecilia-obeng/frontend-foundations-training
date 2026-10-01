@@ -1,5 +1,18 @@
 const message = document.getElementById("message");
 const changeButton = document.getElementById("changeButton");
+const employeeList = document.getElementById("employeeList");
+const employees = [];
+function renderEmployees() {
+    employeeList.innerHTML = "";
+
+    employees.forEach(function (employee) {
+        const listItem = document.createElement("li");
+
+        listItem.textContent = `${employee.name} - ${employee.performance}`;
+
+        employeeList.appendChild(listItem);
+    });
+}
 
 changeButton.addEventListener("click", function () {
     if (message.textContent === "Welcome to the employee system.") {
@@ -36,7 +49,19 @@ if (score >= 80 && attendance >= 90) {
 } else if (attendance < 0 || attendance > 100) {
     message.textContent = "Attendance must be between 0 and 100.";
 } else {
-    message.textContent = `Employee: ${name} | Score: ${score} | Attendance: ${attendance}% | Performance: ${performanceResult}`;
+
+    const employee = {
+        name: name,
+        score: score,
+        attendance: attendance,
+        performance: performanceResult
+    };
+
+    employees.push(employee);
+    renderEmployees();
+
+    message.textContent = `Employee: ${name} | Performance: ${performanceResult}`;
+};
 }
-}
+
 );
