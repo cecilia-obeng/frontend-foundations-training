@@ -5,13 +5,22 @@ const taskList = document.getElementById("taskList");
 const message = document.getElementById("message");
 
 let tasks = [];
+function saveTasks() {
+    localStorage.setItem( "tasks", JSON.stringify(tasks));
+}
+const savedTasks = localStorage.getItem("tasks");
+
+if (savedTasks) {
+    tasks = JSON.parse(savedTasks);
+}
 
 function renderTasks() {
     taskList.innerHTML = "";
 
     tasks.forEach(function(task) {
         const li = document.createElement("li");
-
+    
+    
        
 li.innerHTML = `
     <span>${task.title} - ${task.status}</span>
@@ -20,14 +29,16 @@ li.innerHTML = `
         Complete
     </button>
 
-    <button onclick="deleteTask(${tasks.indexOf(task)})">
-        Delete
-    </button>
+            <button onclick="deleteTask(${tasks.indexOf(task)})">
+                Delete
+            </button>
+        `;
 
-`;
-taskList.appendChild(li);
-    });
+        taskList.appendChild(li);
+});
 }
+
+
 
 taskForm.addEventListener("submit", function(event) {
     event.preventDefault();
@@ -46,7 +57,7 @@ taskForm.addEventListener("submit", function(event) {
     };
 
     tasks.push(newTask);
-
+saveTasks();
     taskTitle.value = "";
     message.textContent = "";
 
@@ -56,11 +67,12 @@ taskForm.addEventListener("submit", function(event) {
 //...existing code...
 function completeTask(index) {
     tasks[index].status = "completed";
-
+     saveTasks();
     renderTasks();
     }
     function deleteTask(index) {
     tasks.splice(index, 1);
+    saveTasks();
 
     renderTasks();
 }function filterTasks(status) {
@@ -104,3 +116,4 @@ document.getElementById("pendingFilter").addEventListener("click", function() {
 document.getElementById("completedFilter").addEventListener("click", function() {
     filterTasks("completed");
 });
+renderTasks();
