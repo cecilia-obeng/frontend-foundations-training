@@ -5,40 +5,43 @@ const taskList = document.getElementById("taskList");
 const message = document.getElementById("message");
 
 let tasks = [];
+
 function saveTasks() {
-    localStorage.setItem( "tasks", JSON.stringify(tasks));
+    localStorage.setItem("tasks", JSON.stringify(tasks));
 }
+
 const savedTasks = localStorage.getItem("tasks");
 
 if (savedTasks) {
     tasks = JSON.parse(savedTasks);
+}
+function createTaskElement(task) {
+    const li = document.createElement("li");
+
+    li.innerHTML = `
+        <span>${task.title} - ${task.status}</span>
+
+        <button onclick="completeTask(${tasks.indexOf(task)})">
+            Complete
+        </button>
+
+        <button onclick="deleteTask(${tasks.indexOf(task)})">
+            Delete
+        </button>
+    `;
+
+    return li;
 }
 
 function renderTasks() {
     taskList.innerHTML = "";
 
     tasks.forEach(function(task) {
-        const li = document.createElement("li");
-    
-    
-       
-li.innerHTML = `
-    <span>${task.title} - ${task.status}</span>
-
-    <button onclick="completeTask(${tasks.indexOf(task)})">
-        Complete
-    </button>
-
-            <button onclick="deleteTask(${tasks.indexOf(task)})">
-                Delete
-            </button>
-        `;
+        const li = createTaskElement(task);
 
         taskList.appendChild(li);
-});
+    });
 }
-
-
 
 taskForm.addEventListener("submit", function(event) {
     event.preventDefault();
@@ -57,25 +60,28 @@ taskForm.addEventListener("submit", function(event) {
     };
 
     tasks.push(newTask);
-saveTasks();
+    saveTasks();
+
     taskTitle.value = "";
     message.textContent = "";
 
     renderTasks();
 });
 
-//...existing code...
 function completeTask(index) {
     tasks[index].status = "completed";
-     saveTasks();
-    renderTasks();
-    }
-    function deleteTask(index) {
-    tasks.splice(index, 1);
-    saveTasks();
 
+    saveTasks();
     renderTasks();
-}function filterTasks(status) {
+}
+
+function deleteTask(index) {
+    tasks.splice(index, 1);
+
+    saveTasks();
+    renderTasks();
+}
+function filterTasks(status) {
     if (status === "all") {
         renderTasks();
         return;
@@ -88,23 +94,12 @@ function completeTask(index) {
     taskList.innerHTML = "";
 
     filteredTasks.forEach(function(task) {
-        const li = document.createElement("li");
-
-        li.innerHTML = `
-            <span>${task.title} - ${task.status}</span>
-
-            <button onclick="completeTask(${tasks.indexOf(task)})">
-                Complete
-            </button>
-
-            <button onclick="deleteTask(${tasks.indexOf(task)})">
-                Delete
-            </button>
-        `;
+        const li = createTaskElement(task);
 
         taskList.appendChild(li);
     });
 }
+
 document.getElementById("allFilter").addEventListener("click", function() {
     filterTasks("all");
 });
@@ -116,4 +111,5 @@ document.getElementById("pendingFilter").addEventListener("click", function() {
 document.getElementById("completedFilter").addEventListener("click", function() {
     filterTasks("completed");
 });
+
 renderTasks();
