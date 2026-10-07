@@ -32,11 +32,15 @@
                 </div>
                 <label class="search-field">
                     <span>Search by name or email</span>
-                    <input id="userSearch" type="search" placeholder="Try a name or email" autocomplete="off">
+                    <input id="userSearch" type="search" placeholder="Try a name or email" autocomplete="off" disabled>
                 </label>
             </div>
-            <p id="directoryStatus" class="directory-status">User data will appear here.</p>
+            <div class="directory-toolbar">
+                <p id="directoryStatus" class="directory-status" role="status" aria-live="polite">Loading users…</p>
+                <button id="retryButton" class="retry-button" type="button" hidden>Retry</button>
+            </div>
             <div id="userGrid" class="user-grid"></div>
+            <p id="emptyMessage" class="empty-message" hidden></p>
         </section>
     </main>
 </body>

@@ -2,6 +2,8 @@
 const userGrid = document.getElementById("userGrid");
 const directoryStatus = document.getElementById("directoryStatus");
 const userSearch = document.getElementById("userSearch");
+const retryButton = document.getElementById("retryButton");
+const emptyMessage = document.getElementById("emptyMessage");
 
 let allUsers = [];
 
@@ -13,6 +15,11 @@ const fetchUsers = async () => {
     }
 
     const users = await response.json();
+
+    if (!Array.isArray(users)) {
+        throw new Error("The API returned data in an unexpected format.");
+    }
+
     console.log("Users received from the API:", users);
     return users;
 };
@@ -65,17 +72,46 @@ const renderUsers = () => {
     });
 
     userGrid.replaceChildren(...filteredUsers.map(createUserCard));
+
+    if (filteredUsers.length === 0) {
+        emptyMessage.hidden = false;
+        emptyMessage.textContent = searchTerm
+            ? "No team members match your search. Try another name or email."
+            : "The API did not return any users.";
+    } else {
+        emptyMessage.hidden = true;
+        emptyMessage.textContent = "";
+    }
+
     directoryStatus.textContent = filteredUsers.length + " of " + allUsers.length + " team members shown.";
 };
 
-userSearch.addEventListener("input", renderUsers);
+const loadUsers = async () => {
+    retryButton.hidden = true;
+    retryButton.disabled = true;
+    userSearch.disabled = true;
+    userGrid.replaceChildren();
+    emptyMessage.hidden = true;
+    directoryStatus.dataset.kind = "";
+    directoryStatus.textContent = "Loading users…";
 
-fetchUsers()
-    .then((users) => {
-        allUsers = users;
+    try {
+        allUsers = await fetchUsers();
+        userSearch.disabled = false;
         renderUsers();
-    })
-    .catch((error) => {
-        console.error("Could not load users:", error);
-        directoryStatus.textContent = "Could not load users. Please try again later.";
-    });
+    } catch (error) {
+        allUsers = [];
+        userGrid.replaceChildren();
+        emptyMessage.hidden = true;
+        directoryStatus.dataset.kind = "error";
+        directoryStatus.textContent = error.message + " Check your connection and try again.";
+        retryButton.hidden = false;
+    } finally {
+        retryButton.disabled = false;
+    }
+};
+
+userSearch.addEventListener("input", renderUsers);
+retryButton.addEventListener("click", loadUsers);
+
+loadUsers();
