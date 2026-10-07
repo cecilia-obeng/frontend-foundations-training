@@ -55,3 +55,8 @@ h2 { font-size: 1.35rem; }
 .contact-details { display: grid; grid-template-columns: 1fr; gap: .2rem; margin: 0; }
 .contact-details dt { margin-top: .45rem; color: var(--muted); font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
 .contact-details dd { overflow-wrap: anywhere; margin: 0; color: #29364a; font-size: .9rem; }
+
+.directory-heading { flex-wrap: wrap; }
+.search-field { display: grid; gap: .4rem; width: min(100%, 320px); color: var(--muted); font-size: .78rem; font-weight: 650; }
+.search-field input { width: 100%; min-height: 44px; padding: .65rem .8rem; border: 1px solid var(--line); border-radius: 10px; background: #fff; color: #182333; font: inherit; font-size: .9rem; }
+.search-field input:focus-visible { outline: 3px solid #b9d9cd; border-color: var(--green); }

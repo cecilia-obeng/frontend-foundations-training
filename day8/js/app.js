@@ -1,4 +1,9 @@
 ﻿const USERS_API_URL = "https://jsonplaceholder.typicode.com/users";
+const userGrid = document.getElementById("userGrid");
+const directoryStatus = document.getElementById("directoryStatus");
+const userSearch = document.getElementById("userSearch");
+
+let allUsers = [];
 
 const fetchUsers = async () => {
     const response = await fetch(USERS_API_URL);
@@ -51,15 +56,24 @@ const createUserCard = (user) => {
     return card;
 };
 
-const renderUsers = (users) => {
-    const cards = users.map(createUserCard);
-    userGrid.replaceChildren(...cards);
-    directoryStatus.textContent = users.length + " team members loaded.";
+const renderUsers = () => {
+    const searchTerm = userSearch.value.trim().toLowerCase();
+    const filteredUsers = allUsers.filter((user) => {
+        const nameMatches = user.name.toLowerCase().includes(searchTerm);
+        const emailMatches = user.email.toLowerCase().includes(searchTerm);
+        return nameMatches || emailMatches;
+    });
+
+    userGrid.replaceChildren(...filteredUsers.map(createUserCard));
+    directoryStatus.textContent = filteredUsers.length + " of " + allUsers.length + " team members shown.";
 };
+
+userSearch.addEventListener("input", renderUsers);
 
 fetchUsers()
     .then((users) => {
-        renderUsers(users);
+        allUsers = users;
+        renderUsers();
     })
     .catch((error) => {
         console.error("Could not load users:", error);
