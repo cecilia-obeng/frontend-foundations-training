@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A responsive user directory powered by JSONPlaceholder.">
+    <title>User Directory | Day 8</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/app.js" defer></script>
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" href="./" aria-label="People Directory home">
+            <span class="brand-mark" aria-hidden="true">P</span>
+            <span>People<span class="brand-light">Directory</span></span>
+        </a>
+        <span class="header-note">Frontend training · Day 8</span>
+    </header>
+
+    <main class="page-shell">
+        <section class="page-intro" aria-labelledby="page-title">
+            <p class="eyebrow">Discover your people</p>
+            <h1 id="page-title">User Directory</h1>
+            <p>Contact details and company information, gathered from a REST API.</p>
+        </section>
+
+        <section class="directory-panel" aria-labelledby="directory-title">
+            <div class="directory-heading">
+                <div>
+                    <p class="eyebrow">The directory</p>
+                    <h2 id="directory-title">Team members</h2>
+                </div>
+            </div>
+            <p id="directoryStatus" class="directory-status">User data will appear here.</p>
+            <div id="userGrid" class="user-grid"></div>
+        </section>
+    </main>
+</body>
+</html>
