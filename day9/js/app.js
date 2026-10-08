@@ -8,10 +8,19 @@ const openCount = document.getElementById("openCount");
 const completedCount = document.getElementById("completedCount");
 const taskForm = document.getElementById("taskForm");
 const taskTitleInput = document.getElementById("taskTitle");
+const submitTaskButton = document.getElementById("submitTaskButton");
 const taskSearch = document.getElementById("taskSearch");
 const taskFilter = document.getElementById("taskFilter");
+const retryButton = document.getElementById("retryButton");
+const emptyState = document.getElementById("emptyState");
 
 let tasks = [];
+const busyTaskIds = new Set();
+
+const setMessage = (message, kind = "") => {
+    dashboardMessage.textContent = message;
+    dashboardMessage.dataset.kind = kind;
+};
 
 const getTasks = async () => {
     const response = await fetch(TODOS_URL);
@@ -71,22 +80,26 @@ const createTaskCard = (task) => {
 
     const actions = document.createElement("div");
     actions.className = "task-actions";
+
     const viewButton = document.createElement("button");
     viewButton.className = "text-button";
     viewButton.type = "button";
     viewButton.textContent = "Details";
+    viewButton.disabled = busyTaskIds.has(task.id);
     viewButton.addEventListener("click", () => showTaskDetails(task.id));
 
     const toggleButton = document.createElement("button");
     toggleButton.className = "text-button";
     toggleButton.type = "button";
-    toggleButton.textContent = task.completed ? "Reopen" : "Complete";
+    toggleButton.textContent = busyTaskIds.has(task.id) ? "Saving…" : task.completed ? "Reopen" : "Complete";
+    toggleButton.disabled = busyTaskIds.has(task.id);
     toggleButton.addEventListener("click", () => updateTaskStatus(task.id, !task.completed));
 
     const deleteButton = document.createElement("button");
     deleteButton.className = "text-button text-button-danger";
     deleteButton.type = "button";
-    deleteButton.textContent = "Delete";
+    deleteButton.textContent = busyTaskIds.has(task.id) ? "Working…" : "Delete";
+    deleteButton.disabled = busyTaskIds.has(task.id);
     deleteButton.addEventListener("click", () => removeTask(task.id));
 
     content.append(title, status);
@@ -108,10 +121,26 @@ const renderTasks = () => {
 
     taskList.replaceChildren(...visibleTasks.map(createTaskCard));
     updateSummary();
-    dashboardMessage.textContent = "Showing " + visibleTasks.length + " of " + tasks.length + " tasks.";
+
+    if (visibleTasks.length === 0) {
+        emptyState.hidden = false;
+        emptyState.textContent = tasks.length === 0
+            ? "There are no tasks yet. Add one above to get started."
+            : "No tasks match those filters. Try a different search or status.";
+    } else {
+        emptyState.hidden = true;
+        emptyState.textContent = "";
+    }
+
+    setMessage("Showing " + visibleTasks.length + " of " + tasks.length + " tasks.", "success");
 };
 
 const showTaskDetails = async (taskId) => {
+    const loading = document.createElement("p");
+    loading.textContent = "Loading task details…";
+    taskDialogContent.replaceChildren(loading);
+    taskDialog.showModal();
+
     try {
         const task = await getTaskById(taskId);
         const title = document.createElement("h2");
@@ -122,31 +151,43 @@ const showTaskDetails = async (taskId) => {
         const state = document.createElement("p");
         state.textContent = "Status: " + (task.completed ? "Completed" : "To do");
         taskDialogContent.replaceChildren(title, id, state);
-        taskDialog.showModal();
     } catch (error) {
-        console.error(error);
+        const message = document.createElement("p");
+        message.className = "error-text";
+        message.textContent = "Could not load these task details. Please close and try again.";
+        taskDialogContent.replaceChildren(message);
     }
 };
 
 const updateTaskStatus = async (taskId, completed) => {
+    busyTaskIds.add(taskId);
+    renderTasks();
+    setMessage("Updating task…");
+
     try {
         const updatedTask = await patchTask(taskId, { completed });
         tasks = tasks.map((task) => task.id === taskId ? { ...task, ...updatedTask } : task);
-        renderTasks();
     } catch (error) {
-        console.error(error);
-        dashboardMessage.textContent = "Could not update the task. See the browser console for details.";
+        setMessage("Could not update the task. Please try again.", "error");
+    } finally {
+        busyTaskIds.delete(taskId);
+        renderTasks();
     }
 };
 
 const removeTask = async (taskId) => {
+    busyTaskIds.add(taskId);
+    renderTasks();
+    setMessage("Removing task…");
+
     try {
         await deleteTaskRequest(taskId);
         tasks = tasks.filter((task) => task.id !== taskId);
-        renderTasks();
     } catch (error) {
-        console.error(error);
-        dashboardMessage.textContent = "Could not delete the task. See the browser console for details.";
+        setMessage("Could not delete the task. Please try again.", "error");
+    } finally {
+        busyTaskIds.delete(taskId);
+        renderTasks();
     }
 };
 
@@ -155,22 +196,30 @@ taskForm.addEventListener("submit", async (event) => {
     const title = taskTitleInput.value.trim();
 
     if (title === "") {
-        dashboardMessage.textContent = "Please enter a task title.";
+        setMessage("Please enter a task title.", "error");
         taskTitleInput.focus();
         return;
     }
+
+    taskForm.setAttribute("aria-busy", "true");
+    submitTaskButton.disabled = true;
+    submitTaskButton.textContent = "Adding…";
+    setMessage("Adding your task…");
 
     try {
         const createdTask = await postTask(title);
         tasks.unshift(createdTask);
         taskSearch.value = "";
         taskFilter.value = "all";
-        renderTasks();
         taskForm.reset();
+        renderTasks();
         taskTitleInput.focus();
     } catch (error) {
-        console.error(error);
-        dashboardMessage.textContent = "Could not create the task. See the browser console for details.";
+        setMessage("Could not add the task. Please try again.", "error");
+    } finally {
+        taskForm.setAttribute("aria-busy", "false");
+        submitTaskButton.disabled = false;
+        submitTaskButton.textContent = "Add task";
     }
 });
 
@@ -178,13 +227,28 @@ taskSearch.addEventListener("input", renderTasks);
 taskFilter.addEventListener("change", renderTasks);
 
 const loadTasks = async () => {
+    retryButton.hidden = true;
+    retryButton.disabled = true;
+    taskSearch.disabled = true;
+    taskFilter.disabled = true;
+    taskList.replaceChildren();
+    emptyState.hidden = true;
+    setMessage("Loading tasks…");
+
     try {
         tasks = await getTasks();
+        taskSearch.disabled = false;
+        taskFilter.disabled = false;
         renderTasks();
     } catch (error) {
-        console.error(error);
-        dashboardMessage.textContent = "Could not load tasks. See the browser console for details.";
+        tasks = [];
+        updateSummary();
+        setMessage("We couldn't load your tasks. Check your connection and try again.", "error");
+        retryButton.hidden = false;
+    } finally {
+        retryButton.disabled = false;
     }
 };
 
+retryButton.addEventListener("click", loadTasks);
 loadTasks();

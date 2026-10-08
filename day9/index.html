@@ -48,28 +48,30 @@
                     <p class="eyebrow">Task list</p>
                     <h2 id="tasks-title">Your tasks</h2>
                 </div>
+                <button id="retryButton" class="retry-button" type="button" hidden>Retry loading</button>
             </div>
-            <form id="taskForm" class="task-form">
+            <form id="taskForm" class="task-form" aria-busy="false">
                 <label for="taskTitle">Create a task</label>
                 <div class="task-form-row">
-                    <input id="taskTitle" name="title" type="text" maxlength="120" placeholder="What needs to get done?" required>
-                    <button class="primary-button" type="submit">Add task</button>
+                    <input id="taskTitle" name="title" type="text" maxlength="120" placeholder="What needs to get done?" aria-describedby="dashboardMessage" required>
+                    <button id="submitTaskButton" class="primary-button" type="submit">Add task</button>
                 </div>
             </form>
             <div class="task-controls">
                 <label class="search-label" for="taskSearch">Search tasks
-                    <input id="taskSearch" type="search" placeholder="Find a task by title" autocomplete="off">
+                    <input id="taskSearch" type="search" placeholder="Find a task by title" autocomplete="off" disabled>
                 </label>
                 <label class="filter-label" for="taskFilter">Show
-                    <select id="taskFilter">
+                    <select id="taskFilter" disabled>
                         <option value="all">All tasks</option>
                         <option value="open">To do</option>
                         <option value="completed">Completed</option>
                     </select>
                 </label>
             </div>
-            <p id="dashboardMessage" role="status" aria-live="polite">Tasks will appear here.</p>
+            <p id="dashboardMessage" class="dashboard-message" role="status" aria-live="polite">Loading tasks…</p>
             <div id="taskList" class="task-list"></div>
+            <p id="emptyState" class="empty-state" hidden></p>
         </section>
     </main>
 

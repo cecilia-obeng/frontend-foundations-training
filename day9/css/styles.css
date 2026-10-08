@@ -111,3 +111,13 @@ h2 { margin-bottom: 0; font-size: 1.3rem; letter-spacing: -.035em; }
     .filter-label select { width: 100%; }
     .task-actions { width: 100%; }
 }
+
+.retry-button { min-height: 40px; padding: .6rem .85rem; border: 1px solid #d9defa; border-radius: 8px; background: var(--lavender); color: var(--blue-dark); font-weight: 700; }
+.retry-button:hover:not(:disabled) { background: #e0e4ff; }
+.retry-button:disabled { cursor: wait; opacity: .6; }
+.dashboard-message { min-height: 1.4rem; margin: 1rem 0; color: var(--muted); font-size: .88rem; }
+.dashboard-message[data-kind="error"], .error-text { color: var(--red); }
+.dashboard-message[data-kind="success"] { color: var(--green); }
+.empty-state { margin: 0; padding: 1.5rem; border: 1px dashed #cbd3df; border-radius: 12px; background: #fafbfc; color: var(--muted); text-align: center; }
+.task-actions button:disabled { cursor: wait; opacity: .6; }
+#taskSearch:disabled, #taskFilter:disabled { background: #f0f2f5; cursor: wait; }
