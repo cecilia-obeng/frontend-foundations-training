@@ -1,0 +1,59 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore products from a public API. Search, filter, sort, and save favourites.">
+  <meta name="theme-color" content="#f5f6f2">
+  <title>Goods — Product Explorer</title>
+  <link rel="preconnect" href="https://dummyjson.com">
+  <link rel="preconnect" href="https://cdn.dummyjson.com" crossorigin>
+  <link rel="stylesheet" href="css/styles.css">
+  <script type="module" src="js/app.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="wordmark" href="./" aria-label="Goods home"><span class="wordmark-mark" aria-hidden="true">g.</span>goods<span class="wordmark-period">/</span></a>
+    <span class="header-note">A little less scrolling. A little more finding.</span>
+    <a class="header-link" href="#catalog">Explore the collection <span aria-hidden="true">↘</span></a>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="page-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span>THE EVERYDAY EDIT</p>
+        <h1 id="page-title">Good things,<br><span>well found.</span></h1>
+        <p class="hero-description">A considered collection of everyday finds. Search around, find your favourites, and see what feels right.</p>
+        <a class="hero-link" href="#catalog">Find your thing <span aria-hidden="true">↓</span></a>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="hero-orbit orbit-one"></div><div class="hero-orbit orbit-two"></div>
+        <div class="hero-sun"></div><div class="hero-slab slab-back"></div><div class="hero-slab slab-front"></div>
+        <div class="hero-label">THE GOOD<br>STUFF CLUB<br><span>EST. TODAY</span></div>
+      </div>
+      <div class="hero-index" aria-hidden="true"><span>01</span><span>—</span><span>THE COLLECTION</span></div>
+    </section>
+
+    <section class="catalog" id="catalog" aria-labelledby="catalog-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">A FEW THINGS TO LOVE</p><h2 id="catalog-title">The collection<span class="heading-period">.</span></h2></div>
+        <p id="resultCount" class="result-count" aria-live="polite">Getting things ready…</p>
+      </div>
+      <div class="toolbar" aria-label="Product controls">
+        <label class="search-control"><span class="visually-hidden">Search products by name</span><span class="search-icon" aria-hidden="true">⌕</span><input id="searchInput" type="search" placeholder="What are you looking for?" autocomplete="off" disabled></label>
+        <label class="select-control"><span class="control-caption">CATEGORY</span><select id="categorySelect" disabled><option value="all">All categories</option></select></label>
+        <label class="select-control sort-control"><span class="control-caption">SORT BY</span><select id="sortSelect" disabled><option value="featured">Featured</option><option value="price-asc">Price: low to high</option><option value="price-desc">Price: high to low</option></select></label>
+        <button id="favoritesToggle" class="favorites-toggle" type="button" aria-pressed="false" disabled><span aria-hidden="true">♡</span><span>Saved</span><span id="favoriteCount" class="favorite-count">0</span></button>
+      </div>
+      <div class="status-row"><p id="statusMessage" class="status-message" role="status" aria-live="polite">Finding the good stuff…</p><button id="retryButton" class="retry-button" type="button" hidden>Try again <span aria-hidden="true">↗</span></button></div>
+      <div id="productGrid" class="product-grid" aria-busy="true"></div>
+      <div id="emptyState" class="empty-state" hidden><span class="empty-spark" aria-hidden="true">✳</span><h3>No finds this time.</h3><p>Try a different search or category and have another look.</p><button id="resetFiltersButton" class="reset-button" type="button">Clear filters</button></div>
+    </section>
+    <aside class="bottom-note"><span>GOOD THINGS TAKE A LITTLE LOOKING.</span><span>MADE FOR THE CURIOUS <b aria-hidden="true">✳</b></span></aside>
+  </main>
+
+  <dialog id="productDialog" class="product-dialog" aria-labelledby="dialogTitle"><button id="closeDialogButton" class="dialog-close" type="button" aria-label="Close product details">×</button><div id="dialogContent"></div></dialog>
+  <footer class="site-footer"><a class="wordmark footer-wordmark" href="./"><span class="wordmark-mark" aria-hidden="true">g.</span>goods<span class="wordmark-period">/</span></a><p>PRODUCT EXPLORER · FRONTEND FOUNDATIONS</p><a href="#page-title">Back to top ↑</a></footer>
+</body>
+</html>
+
