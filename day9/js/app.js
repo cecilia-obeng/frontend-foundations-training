@@ -1,4 +1,5 @@
-﻿const TODOS_URL = "https://jsonplaceholder.typicode.com/todos";
+﻿import { createTask, deleteTask, getTaskById, getTasks, updateTask } from "./api.js";
+
 const taskList = document.getElementById("taskList");
 const dashboardMessage = document.getElementById("dashboardMessage");
 const taskDialog = document.getElementById("taskDialog");
@@ -20,43 +21,6 @@ const busyTaskIds = new Set();
 const setMessage = (message, kind = "") => {
     dashboardMessage.textContent = message;
     dashboardMessage.dataset.kind = kind;
-};
-
-const getTasks = async () => {
-    const response = await fetch(TODOS_URL);
-    if (!response.ok) throw new Error("Could not fetch tasks. Status: " + response.status);
-    return response.json();
-};
-
-const getTaskById = async (taskId) => {
-    const response = await fetch(TODOS_URL + "/" + taskId);
-    if (!response.ok) throw new Error("Could not fetch task details. Status: " + response.status);
-    return response.json();
-};
-
-const postTask = async (title) => {
-    const response = await fetch(TODOS_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json; charset=UTF-8" },
-        body: JSON.stringify({ title, completed: false, userId: 1 })
-    });
-    if (!response.ok) throw new Error("Could not create the task. Status: " + response.status);
-    return response.json();
-};
-
-const patchTask = async (taskId, updates) => {
-    const response = await fetch(TODOS_URL + "/" + taskId, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json; charset=UTF-8" },
-        body: JSON.stringify(updates)
-    });
-    if (!response.ok) throw new Error("Could not update the task. Status: " + response.status);
-    return response.json();
-};
-
-const deleteTaskRequest = async (taskId) => {
-    const response = await fetch(TODOS_URL + "/" + taskId, { method: "DELETE" });
-    if (!response.ok) throw new Error("Could not delete the task. Status: " + response.status);
 };
 
 const updateSummary = () => {
@@ -165,7 +129,7 @@ const updateTaskStatus = async (taskId, completed) => {
     setMessage("Updating task…");
 
     try {
-        const updatedTask = await patchTask(taskId, { completed });
+        const updatedTask = await updateTask(taskId, { completed });
         tasks = tasks.map((task) => task.id === taskId ? { ...task, ...updatedTask } : task);
     } catch (error) {
         setMessage("Could not update the task. Please try again.", "error");
@@ -181,7 +145,7 @@ const removeTask = async (taskId) => {
     setMessage("Removing task…");
 
     try {
-        await deleteTaskRequest(taskId);
+        await deleteTask(taskId);
         tasks = tasks.filter((task) => task.id !== taskId);
     } catch (error) {
         setMessage("Could not delete the task. Please try again.", "error");
@@ -207,7 +171,7 @@ taskForm.addEventListener("submit", async (event) => {
     setMessage("Adding your task…");
 
     try {
-        const createdTask = await postTask(title);
+        const createdTask = await createTask(title);
         tasks.unshift(createdTask);
         taskSearch.value = "";
         taskFilter.value = "all";
