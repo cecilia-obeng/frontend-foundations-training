@@ -71,11 +71,11 @@ When the page loads, `app.js` calls `getProducts()` in `api.js`. That function s
 
 ![Product Explorer on mobile](./screenshots/mobile-page.png)
 
-Original captures: [desktop](./screenshots/deskstop.png) · [mobile](./screenshots/mobile.png).
+
 
 ## Learning reflection
 
-Before submission, write this section in your own words: the biggest challenge you worked through, what you learned about API data and browser storage, and one improvement you would make with more time.
+I learned how to find the API request in the Network tab and confirm it returned a 200 status with product data. Testing the slower network also helped me understand why the page needs a loading message. Next, I want to practise tracing the JavaScript myself, from the API response through to the product cards.
 
 ## Known limitations
 
