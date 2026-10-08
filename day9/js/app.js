@@ -6,6 +6,8 @@ const taskDialogContent = document.getElementById("taskDialogContent");
 const totalCount = document.getElementById("totalCount");
 const openCount = document.getElementById("openCount");
 const completedCount = document.getElementById("completedCount");
+const taskForm = document.getElementById("taskForm");
+const taskTitleInput = document.getElementById("taskTitle");
 
 let tasks = [];
 
@@ -21,6 +23,18 @@ const getTaskById = async (taskId) => {
     const response = await fetch(TODOS_URL + "/" + taskId);
     if (!response.ok) {
         throw new Error("Could not fetch task details. Status: " + response.status);
+    }
+    return response.json();
+};
+
+const postTask = async (title) => {
+    const response = await fetch(TODOS_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json; charset=UTF-8" },
+        body: JSON.stringify({ title, completed: false, userId: 1 })
+    });
+    if (!response.ok) {
+        throw new Error("Could not create the task. Status: " + response.status);
     }
     return response.json();
 };
@@ -78,6 +92,28 @@ const showTaskDetails = async (taskId) => {
         console.error(error);
     }
 };
+
+taskForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const title = taskTitleInput.value.trim();
+
+    if (title === "") {
+        dashboardMessage.textContent = "Please enter a task title.";
+        taskTitleInput.focus();
+        return;
+    }
+
+    try {
+        const createdTask = await postTask(title);
+        tasks.unshift(createdTask);
+        renderTasks();
+        taskForm.reset();
+        taskTitleInput.focus();
+    } catch (error) {
+        console.error(error);
+        dashboardMessage.textContent = "Could not create the task. See the browser console for details.";
+    }
+});
 
 const loadTasks = async () => {
     try {

@@ -86,3 +86,14 @@ h2 { margin-bottom: 0; font-size: 1.3rem; letter-spacing: -.035em; }
 @media (max-width: 520px) {
     .task-card { align-items: flex-start; flex-direction: column; }
 }
+
+.task-form { display: grid; gap: .6rem; margin: 1.25rem 0; }
+.task-form > label { font-size: .82rem; font-weight: 700; }
+.task-form-row { display: flex; gap: .7rem; }
+.task-form input { width: 100%; min-width: 0; min-height: 46px; padding: .7rem .85rem; border: 1px solid var(--line); border-radius: 9px; background: #fff; color: #202b3c; }
+.task-form input::placeholder { color: #929bab; }
+.primary-button { min-height: 46px; padding: .7rem 1rem; border: 0; border-radius: 9px; background: var(--blue); color: #fff; font-weight: 750; white-space: nowrap; }
+.primary-button:hover { background: var(--blue-dark); }
+@media (max-width: 520px) {
+    .task-form-row { flex-direction: column; }
+}

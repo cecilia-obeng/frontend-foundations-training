@@ -49,6 +49,13 @@
                     <h2 id="tasks-title">Your tasks</h2>
                 </div>
             </div>
+            <form id="taskForm" class="task-form">
+                <label for="taskTitle">Create a task</label>
+                <div class="task-form-row">
+                    <input id="taskTitle" name="title" type="text" maxlength="120" placeholder="What needs to get done?" required>
+                    <button class="primary-button" type="submit">Add task</button>
+                </div>
+            </form>
             <p id="dashboardMessage" role="status" aria-live="polite">Tasks will appear here.</p>
             <div id="taskList" class="task-list"></div>
         </section>
