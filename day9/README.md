@@ -43,9 +43,9 @@ Opening index.html directly as a file URL may prevent the browser from loading t
 
 ## Screenshots
 
-Add a desktop and mobile screenshot of the running dashboard here. Save the images in a screenshots folder and embed them with Markdown, for example:
-
 ![TaskFlow dashboard on desktop](./screenshots/dashboard-desktop.png)
+
+![TaskFlow dashboard on mobile](./screenshots/dashboard-mobile.png)
 
 ## Challenges and learning reflection
 
