@@ -49,8 +49,16 @@
                     <h2 id="tasks-title">Your tasks</h2>
                 </div>
             </div>
+            <p id="dashboardMessage" role="status" aria-live="polite">Tasks will appear here.</p>
             <div id="taskList" class="task-list"></div>
         </section>
     </main>
+
+    <dialog id="taskDialog" class="task-dialog" aria-labelledby="taskDialogTitle">
+        <form method="dialog" class="dialog-close-form">
+            <button class="icon-button" aria-label="Close task details">×</button>
+        </form>
+        <div id="taskDialogContent"></div>
+    </dialog>
 </body>
 </html>

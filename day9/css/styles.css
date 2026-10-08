@@ -68,3 +68,21 @@ h2 { margin-bottom: 0; font-size: 1.3rem; letter-spacing: -.035em; }
     .summary-card strong { font-size: 1.4rem; }
     .panel-heading { align-items: flex-start; flex-direction: column; }
 }
+
+.task-card { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem 1.1rem; border: 1px solid var(--line); border-radius: 12px; background: #fff; }
+.task-card-content { display: flex; min-width: 0; align-items: center; flex-wrap: wrap; gap: .75rem; }
+.task-card h3 { overflow-wrap: anywhere; margin: 0; font-size: .96rem; font-weight: 650; }
+.task-status { padding: .3rem .55rem; border-radius: 999px; font-size: .72rem; font-weight: 700; white-space: nowrap; }
+.task-status.is-open { background: #fff4df; color: #80550e; }
+.task-status.is-complete { background: #e8f5ee; color: #176646; }
+.text-button { padding: .5rem .65rem; border: 0; border-radius: 7px; background: var(--lavender); color: var(--blue-dark); font-size: .82rem; font-weight: 700; white-space: nowrap; }
+.text-button:hover { background: #e0e4ff; }
+.task-dialog { width: min(100% - 2rem, 480px); padding: 1.5rem; border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 20px 70px rgb(24 35 51 / 25%); }
+.task-dialog::backdrop { background: rgb(18 28 45 / 45%); }
+.dialog-close-form { display: flex; justify-content: flex-end; }
+.icon-button { width: 36px; height: 36px; border: 0; border-radius: 9px; background: #f1f3f7; font-size: 1.4rem; }
+#taskDialogContent h2 { margin: .5rem 0 1rem; }
+#taskDialogContent p { color: var(--muted); }
+@media (max-width: 520px) {
+    .task-card { align-items: flex-start; flex-direction: column; }
+}
