@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A task dashboard for practicing REST API requests with JavaScript.">
+    <title>TaskFlow | API Dashboard</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/app.js" defer></script>
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" href="./"><span class="brand-mark" aria-hidden="true">T</span>TaskFlow</a>
+        <nav aria-label="Main navigation">
+            <a class="active" href="#dashboard">Dashboard</a>
+            <a href="#tasks">My tasks</a>
+        </nav>
+        <span class="training-label">Day 9 · API project</span>
+    </header>
+
+    <main id="dashboard" class="page-shell">
+        <section class="page-heading" aria-labelledby="page-title">
+            <div>
+                <p class="eyebrow">Your workspace</p>
+                <h1 id="page-title">Tasks, in focus.</h1>
+                <p>A small dashboard for planning your next steps.</p>
+            </div>
+        </section>
+
+        <section class="summary-grid" aria-label="Task summary">
+            <article class="summary-card">
+                <p>Total tasks</p>
+                <strong id="totalCount">—</strong>
+            </article>
+            <article class="summary-card">
+                <p>To do</p>
+                <strong id="openCount">—</strong>
+            </article>
+            <article class="summary-card">
+                <p>Completed</p>
+                <strong id="completedCount">—</strong>
+            </article>
+        </section>
+
+        <section id="tasks" class="task-panel" aria-labelledby="tasks-title">
+            <div class="panel-heading">
+                <div>
+                    <p class="eyebrow">Task list</p>
+                    <h2 id="tasks-title">Your tasks</h2>
+                </div>
+            </div>
+            <div id="taskList" class="task-list"></div>
+        </section>
+    </main>
+</body>
+</html>
