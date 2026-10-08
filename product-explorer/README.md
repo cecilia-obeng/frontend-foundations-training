@@ -1,4 +1,4 @@
-# Goods — Product Explorer
+﻿# Goods — Product Explorer
 
 A responsive product discovery app built with HTML, CSS, and vanilla JavaScript. It loads real product data and lets you search, filter, sort, inspect product details, and save favourites in your browser.
 
@@ -69,7 +69,7 @@ When the page loads, `app.js` calls `getProducts()` in `api.js`. That function s
 
 ### Mobile
 
-![Product Explorer on mobile](./screenshots/mobile-page.png)
+![Product Explorer on mobile](./screenshots/mobile-page.png)`r`n`r`nOriginal captures: [desktop](./screenshots/deskstop.png) · [mobile](./screenshots/mobile.png).
 
 ## Learning reflection
 
@@ -80,3 +80,4 @@ Before submission, write this section in your own words: the biggest challenge y
 - The app needs an internet connection to load the product collection and remote product images.
 - Favourites are stored in the current browser only; they do not sync across devices.
 - If browser storage is blocked or full, the product explorer still works, but it cannot preserve favourite changes after a refresh.
+
