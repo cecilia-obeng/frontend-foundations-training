@@ -1,4 +1,4 @@
-﻿const currency = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" });
+const currency = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" });
 
 const makeProductImage = (product, className = "product-image") => {
   const image = document.createElement("img");
@@ -93,4 +93,3 @@ export const renderProductDetails = (product, isFavorite, onToggle) => {
   content.append(imageWrap, copy);
   return content;
 };
-
