@@ -108,12 +108,13 @@ const showTaskDetails = async (taskId) => {
     taskDialog.showModal();
 
     try {
-        const task = await getTaskById(taskId);
+        const localTask = tasks.find((item) => item.id === taskId && item.localOnly);
+        const task = localTask || await getTaskById(taskId);
         const title = document.createElement("h2");
         title.id = "taskDialogTitle";
         title.textContent = task.title;
         const id = document.createElement("p");
-        id.textContent = "Task ID: " + task.id;
+        id.textContent = task.localOnly ? "Saved for this browser session." : "Task ID: " + task.id;
         const state = document.createElement("p");
         state.textContent = "Status: " + (task.completed ? "Completed" : "To do");
         taskDialogContent.replaceChildren(title, id, state);
@@ -131,7 +132,10 @@ const updateTaskStatus = async (taskId, completed) => {
     setMessage("Updating task…");
 
     try {
-        const updatedTask = await updateTask(taskId, { completed });
+        const currentTask = tasks.find((task) => task.id === taskId);
+        const updatedTask = currentTask.localOnly
+            ? { completed }
+            : await updateTask(taskId, { completed });
         tasks = tasks.map((task) => task.id === taskId ? { ...task, ...updatedTask } : task);
     } catch (error) {
         setMessage("Could not update the task. Please try again.", "error");
@@ -147,7 +151,10 @@ const removeTask = async (taskId) => {
     setMessage("Removing task…");
 
     try {
-        await deleteTask(taskId);
+        const taskToDelete = tasks.find((task) => task.id === taskId);
+        if (!taskToDelete.localOnly) {
+            await deleteTask(taskId);
+        }
         tasks = tasks.filter((task) => task.id !== taskId);
     } catch (error) {
         setMessage("Could not delete the task. Please try again.", "error");
@@ -173,7 +180,12 @@ taskForm.addEventListener("submit", async (event) => {
     setMessage("Adding your task…");
 
     try {
-        const createdTask = await createTask(title);
+        const apiTask = await createTask(title);
+        const createdTask = {
+            ...apiTask,
+            id: "local-" + Date.now() + "-" + Math.random().toString(16).slice(2),
+            localOnly: true
+        };
         tasks.unshift(createdTask);
         taskSearch.value = "";
         taskFilter.value = "all";
@@ -225,4 +237,5 @@ const loadTasks = async () => {
 
 retryButton.addEventListener("click", loadTasks);
 loadTasks();
+
 
