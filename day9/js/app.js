@@ -96,7 +96,9 @@ const renderTasks = () => {
         emptyState.textContent = "";
     }
 
-    setMessage("Showing " + visibleTasks.length + " of " + tasks.length + " tasks.", "success");
+    if (dashboardMessage.dataset.kind !== "error") {
+        setMessage("Showing " + visibleTasks.length + " of " + tasks.length + " tasks.", "success");
+    }
 };
 
 const showTaskDetails = async (taskId) => {
@@ -187,8 +189,15 @@ taskForm.addEventListener("submit", async (event) => {
     }
 });
 
-taskSearch.addEventListener("input", renderTasks);
-taskFilter.addEventListener("change", renderTasks);
+const handleTaskViewChange = () => {
+    if (dashboardMessage.dataset.kind === "error") {
+        setMessage("", "");
+    }
+    renderTasks();
+};
+
+taskSearch.addEventListener("input", handleTaskViewChange);
+taskFilter.addEventListener("change", handleTaskViewChange);
 
 const loadTasks = async () => {
     retryButton.hidden = true;
@@ -216,3 +225,4 @@ const loadTasks = async () => {
 
 retryButton.addEventListener("click", loadTasks);
 loadTasks();
+
