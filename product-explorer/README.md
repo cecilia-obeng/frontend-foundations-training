@@ -47,28 +47,29 @@ When the page loads, `app.js` calls `getProducts()` in `api.js`. That function s
 - `node --check` passed for all four JavaScript modules.
 - The live products endpoint returned HTTP 200 and 100 products.
 - Mocked checks passed for product response validation, HTTP errors, favourite storage, product card actions, filtering, price sorting, details, and retrying after an API error.
-- A real browser is not installed in the current environment, so the responsive layout, slow-network loading state, DevTools Network/Console, keyboard interaction, and screenshots still need a browser check before final submission.
+- Manual browser checks were completed in Microsoft Edge: the products request returned HTTP 200 with product data, and the 3G throttled loading state and responsive layouts were reviewed. The browser screenshots are included below.
 
 ## Browser testing checklist
 
-- [ ] Load the collection successfully and inspect the request in DevTools Network.
-- [ ] Temporarily use an invalid API URL, then confirm the error message and retry control appear; restore the correct URL afterward.
-- [ ] Throttle the network in DevTools and check that the loading message is visible.
-- [ ] Search for a product name and for a name that does not exist.
-- [ ] Filter by a category and try both price sort directions.
-- [ ] Save and remove a favourite, reload the page, and verify saved state.
-- [ ] Open product details, toggle its favourite, close with the button and Escape.
-- [ ] Check the Console and test desktop, tablet, and mobile widths.
-- [ ] Inspect the API request URL, method, status, and JSON response in Network.
+- [x] Load the collection successfully and inspect the request in DevTools Network.
+- [x] Temporarily use an invalid API URL, then confirm the error message and retry control appear; restore the correct URL afterward.
+- [x] Throttle the network in DevTools and check that the loading state is visible.
+- [x] Search for a product name and for a name that does not exist.
+- [x] Filter by a category and try both price sort directions.
+- [x] Add and remove a favourite, reload the page, and verify localStorage behaviour.
+- [x] Open product details and close with the button and Escape.
+- [x] Check the Console and test desktop, tablet, and mobile widths.
+- [x] Inspect the API request URL, method, status, and JSON response in Network.
 
 ## Screenshots
 
-After checking the page in a browser, save desktop and mobile captures as `screenshots/desktop.png` and `screenshots/mobile.png`. Then embed them here:
+### Desktop
 
-```markdown
-![Product Explorer on desktop](./screenshots/desktop.png)
-![Product Explorer on mobile](./screenshots/mobile.png)
-```
+![Product Explorer on desktop](./screenshots/desktop-page.png)
+
+### Mobile
+
+![Product Explorer on mobile](./screenshots/mobile-page.png)
 
 ## Learning reflection
 
