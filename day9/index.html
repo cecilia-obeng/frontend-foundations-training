@@ -56,6 +56,18 @@
                     <button class="primary-button" type="submit">Add task</button>
                 </div>
             </form>
+            <div class="task-controls">
+                <label class="search-label" for="taskSearch">Search tasks
+                    <input id="taskSearch" type="search" placeholder="Find a task by title" autocomplete="off">
+                </label>
+                <label class="filter-label" for="taskFilter">Show
+                    <select id="taskFilter">
+                        <option value="all">All tasks</option>
+                        <option value="open">To do</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </label>
+            </div>
             <p id="dashboardMessage" role="status" aria-live="polite">Tasks will appear here.</p>
             <div id="taskList" class="task-list"></div>
         </section>

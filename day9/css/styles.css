@@ -97,3 +97,17 @@ h2 { margin-bottom: 0; font-size: 1.3rem; letter-spacing: -.035em; }
 @media (max-width: 520px) {
     .task-form-row { flex-direction: column; }
 }
+
+.task-controls { display: flex; align-items: flex-end; gap: .8rem; margin: 1.25rem 0; }
+.search-label, .filter-label { display: grid; gap: .4rem; color: var(--muted); font-size: .78rem; font-weight: 700; }
+.search-label { flex: 1; }
+.task-controls input, .task-controls select { min-height: 42px; padding: .6rem .75rem; border: 1px solid var(--line); border-radius: 9px; background: #fff; color: #202b3c; }
+.filter-label select { min-width: 140px; }
+.task-actions { display: flex; flex-wrap: wrap; gap: .35rem; }
+.text-button-danger { background: #fff0f0; color: var(--red); }
+.text-button-danger:hover { background: #ffe2e2; }
+@media (max-width: 520px) {
+    .task-controls { align-items: stretch; flex-direction: column; }
+    .filter-label select { width: 100%; }
+    .task-actions { width: 100%; }
+}

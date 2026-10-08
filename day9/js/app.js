@@ -8,22 +8,20 @@ const openCount = document.getElementById("openCount");
 const completedCount = document.getElementById("completedCount");
 const taskForm = document.getElementById("taskForm");
 const taskTitleInput = document.getElementById("taskTitle");
+const taskSearch = document.getElementById("taskSearch");
+const taskFilter = document.getElementById("taskFilter");
 
 let tasks = [];
 
 const getTasks = async () => {
     const response = await fetch(TODOS_URL);
-    if (!response.ok) {
-        throw new Error("Could not fetch tasks. Status: " + response.status);
-    }
+    if (!response.ok) throw new Error("Could not fetch tasks. Status: " + response.status);
     return response.json();
 };
 
 const getTaskById = async (taskId) => {
     const response = await fetch(TODOS_URL + "/" + taskId);
-    if (!response.ok) {
-        throw new Error("Could not fetch task details. Status: " + response.status);
-    }
+    if (!response.ok) throw new Error("Could not fetch task details. Status: " + response.status);
     return response.json();
 };
 
@@ -33,10 +31,23 @@ const postTask = async (title) => {
         headers: { "Content-Type": "application/json; charset=UTF-8" },
         body: JSON.stringify({ title, completed: false, userId: 1 })
     });
-    if (!response.ok) {
-        throw new Error("Could not create the task. Status: " + response.status);
-    }
+    if (!response.ok) throw new Error("Could not create the task. Status: " + response.status);
     return response.json();
+};
+
+const patchTask = async (taskId, updates) => {
+    const response = await fetch(TODOS_URL + "/" + taskId, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json; charset=UTF-8" },
+        body: JSON.stringify(updates)
+    });
+    if (!response.ok) throw new Error("Could not update the task. Status: " + response.status);
+    return response.json();
+};
+
+const deleteTaskRequest = async (taskId) => {
+    const response = await fetch(TODOS_URL + "/" + taskId, { method: "DELETE" });
+    if (!response.ok) throw new Error("Could not delete the task. Status: " + response.status);
 };
 
 const updateSummary = () => {
@@ -51,7 +62,6 @@ const createTaskCard = (task) => {
 
     const content = document.createElement("div");
     content.className = "task-card-content";
-
     const title = document.createElement("h3");
     title.textContent = task.title;
 
@@ -59,21 +69,46 @@ const createTaskCard = (task) => {
     status.className = task.completed ? "task-status is-complete" : "task-status is-open";
     status.textContent = task.completed ? "Completed" : "To do";
 
+    const actions = document.createElement("div");
+    actions.className = "task-actions";
     const viewButton = document.createElement("button");
     viewButton.className = "text-button";
     viewButton.type = "button";
-    viewButton.textContent = "View details";
+    viewButton.textContent = "Details";
     viewButton.addEventListener("click", () => showTaskDetails(task.id));
 
+    const toggleButton = document.createElement("button");
+    toggleButton.className = "text-button";
+    toggleButton.type = "button";
+    toggleButton.textContent = task.completed ? "Reopen" : "Complete";
+    toggleButton.addEventListener("click", () => updateTaskStatus(task.id, !task.completed));
+
+    const deleteButton = document.createElement("button");
+    deleteButton.className = "text-button text-button-danger";
+    deleteButton.type = "button";
+    deleteButton.textContent = "Delete";
+    deleteButton.addEventListener("click", () => removeTask(task.id));
+
     content.append(title, status);
-    card.append(content, viewButton);
+    actions.append(viewButton, toggleButton, deleteButton);
+    card.append(content, actions);
     return card;
 };
 
 const renderTasks = () => {
-    taskList.replaceChildren(...tasks.map(createTaskCard));
+    const query = taskSearch.value.trim().toLowerCase();
+    const selectedStatus = taskFilter.value;
+    const visibleTasks = tasks.filter((task) => {
+        const matchesSearch = task.title.toLowerCase().includes(query);
+        const matchesStatus = selectedStatus === "all"
+            || (selectedStatus === "open" && !task.completed)
+            || (selectedStatus === "completed" && task.completed);
+        return matchesSearch && matchesStatus;
+    });
+
+    taskList.replaceChildren(...visibleTasks.map(createTaskCard));
     updateSummary();
-    dashboardMessage.textContent = tasks.length + " tasks loaded.";
+    dashboardMessage.textContent = "Showing " + visibleTasks.length + " of " + tasks.length + " tasks.";
 };
 
 const showTaskDetails = async (taskId) => {
@@ -93,6 +128,28 @@ const showTaskDetails = async (taskId) => {
     }
 };
 
+const updateTaskStatus = async (taskId, completed) => {
+    try {
+        const updatedTask = await patchTask(taskId, { completed });
+        tasks = tasks.map((task) => task.id === taskId ? { ...task, ...updatedTask } : task);
+        renderTasks();
+    } catch (error) {
+        console.error(error);
+        dashboardMessage.textContent = "Could not update the task. See the browser console for details.";
+    }
+};
+
+const removeTask = async (taskId) => {
+    try {
+        await deleteTaskRequest(taskId);
+        tasks = tasks.filter((task) => task.id !== taskId);
+        renderTasks();
+    } catch (error) {
+        console.error(error);
+        dashboardMessage.textContent = "Could not delete the task. See the browser console for details.";
+    }
+};
+
 taskForm.addEventListener("submit", async (event) => {
     event.preventDefault();
     const title = taskTitleInput.value.trim();
@@ -106,6 +163,8 @@ taskForm.addEventListener("submit", async (event) => {
     try {
         const createdTask = await postTask(title);
         tasks.unshift(createdTask);
+        taskSearch.value = "";
+        taskFilter.value = "all";
         renderTasks();
         taskForm.reset();
         taskTitleInput.focus();
@@ -114,6 +173,9 @@ taskForm.addEventListener("submit", async (event) => {
         dashboardMessage.textContent = "Could not create the task. See the browser console for details.";
     }
 });
+
+taskSearch.addEventListener("input", renderTasks);
+taskFilter.addEventListener("change", renderTasks);
 
 const loadTasks = async () => {
     try {
